@@ -1,19 +1,28 @@
 import { ethers } from "hardhat";
+import dotenv from "dotenv";
 
+dotenv.config();
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
 
-  const lockedAmount = ethers.utils.parseEther("0.001");
+  console.log("Deployment Process Bigin 🔴🔴🔴");
+  console.log("----------------------------------------------------------------------------");
+  console.log("Deploying Alpha Token Contract 🔴🔴🔴");
+  const alpha = await ethers.getContractFactory("Alpha");
+  const tokenAlpha = await alpha.deploy();
+  console.log("Deployed Successfully Alpha Token Contract at", tokenAlpha.address," ✅✅✅");
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  console.log("Deploying Beta Token Contract 🔴🔴🔴");
+  const beta = await ethers.getContractFactory("Beta");
+  const tokenBeta = await beta.deploy();
+  console.log("Deployed Successfully Beta Token Contract at", tokenBeta.address," ✅✅✅");
 
-  await lock.deployed();
+  console.log("Deploying Pool Contract 🔴🔴🔴");
+  const Pool = await ethers.getContractFactory("Beta");
+  const PoolContract = await Pool.deploy();
+  console.log("Deployed Successfully Beta Token Contract at", tokenBeta.address," ✅✅✅");
+  console.log("----------------------------------------------------------------------------");
+  console.log("Deployment Process Complete ✅✅✅");
 
-  console.log(
-    `Lock with ${ethers.utils.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
